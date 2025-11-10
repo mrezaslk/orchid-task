@@ -9,6 +9,24 @@ A minimal Trello-like task board with drag & drop functionality.
 - pnpm 8+
 - Docker
 
+
+## 🔧 Configuration
+
+### Backend (.env)
+```env
+DATABASE_URL=postgresql://app:app@localhost:5432/app?schema=public
+REDIS_HOST=localhost
+REDIS_PORT=6379
+PORT=8000
+NODE_ENV=development
+```
+
+### Frontend (.env.local)
+```env
+NEXT_PUBLIC_API_URL=http://localhost:8000/api
+```
+
+
 ### Setup & Run
 
 ```bash
@@ -35,24 +53,6 @@ pnpm dev
 
 Visit: **http://localhost:3000**
 
-## 🗄️ Reset Database
-
-If you need to start fresh:
-
-```bash
-cd apps/backend
-
-# Option 1: Using the script
-./reset-db.sh
-pnpm prisma:push
-pnpm seed
-
-# Option 2: Manual
-docker exec -it taskboard-db-dev psql -U app -d postgres -c "DROP DATABASE IF EXISTS app;"
-docker exec -it taskboard-db-dev psql -U app -d postgres -c "CREATE DATABASE app;"
-pnpm prisma:push
-pnpm seed
-```
 
 ## 📦 What's Included
 
@@ -122,22 +122,6 @@ pnpm lint             # Lint all apps
 pnpm format           # Format all code
 ```
 
-## 🔧 Configuration
-
-### Backend (.env)
-```env
-DATABASE_URL=postgresql://app:app@localhost:5432/app?schema=public
-REDIS_HOST=localhost
-REDIS_PORT=6379
-PORT=8000
-NODE_ENV=development
-```
-
-### Frontend (.env.local)
-```env
-NEXT_PUBLIC_API_URL=http://localhost:8000/api
-```
-
 ## 📚 API Endpoints
 
 - `GET /api/boards` - List boards
@@ -147,6 +131,25 @@ NEXT_PUBLIC_API_URL=http://localhost:8000/api
 - `PATCH /api/tasks/:id/move` - Move task to column
 
 Full API docs at: http://localhost:8000/docs
+
+## 🗄️ Reset Database
+
+If you need to start fresh:
+
+```bash
+cd apps/backend
+
+# Option 1: Using the script
+./reset-db.sh
+pnpm prisma:push
+pnpm seed
+
+# Option 2: Manual
+docker exec -it taskboard-db-dev psql -U app -d postgres -c "DROP DATABASE IF EXISTS app;"
+docker exec -it taskboard-db-dev psql -U app -d postgres -c "CREATE DATABASE app;"
+pnpm prisma:push
+pnpm seed
+```
 
 ## 🎯 Features
 
