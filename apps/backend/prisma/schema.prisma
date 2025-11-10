@@ -1,0 +1,57 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+model Board {
+  id        String   @id @default(cuid())
+  name      String
+  createdAt DateTime @default(now()) @map("created_at")
+
+  // Relations
+  columns Column[]
+  tasks   Task[]
+
+  @@map("boards")
+}
+
+model Column {
+  id       String @id @default(cuid())
+  boardId  String @map("board_id")
+  name     String
+  position Int
+
+  // Relations
+  board Board  @relation(fields: [boardId], references: [id], onDelete: Cascade)
+  tasks Task[]
+
+  @@unique([boardId, position])
+  @@index([boardId])
+  @@map("columns")
+}
+
+model Task {
+  id          String   @id @default(cuid())
+  boardId     String   @map("board_id")
+  columnId    String   @map("column_id")
+  title       String
+  description String?
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  board  Board  @relation(fields: [boardId], references: [id], onDelete: Cascade)
+  column Column @relation(fields: [columnId], references: [id], onDelete: Cascade)
+
+  @@index([boardId])
+  @@index([columnId])
+  @@map("tasks")
+}

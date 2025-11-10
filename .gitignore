@@ -1,0 +1,40 @@
+# Dependencies
+node_modules
+.pnp
+.pnp.js
+
+# Testing
+coverage
+*.log
+
+# Production
+build
+dist
+.next
+out
+
+# Environment
+.env
+.env*.local
+
+# IDEs
+.idea
+.vscode
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Turborepo
+.turbo
+
+# Prisma
+prisma/migrations
+
+# Misc
+*.tsbuildinfo
+.eslintcache
+
